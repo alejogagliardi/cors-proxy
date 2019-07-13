@@ -6,8 +6,15 @@ var express = require('express'),
 var myLimit = typeof (process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
+app.use(app.static(__dirname + "../client/dist"))
+
 app.use(bodyParser.json({ limit: myLimit }));
 
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname))
+});
+
+/*
 app.all('*', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
@@ -47,7 +54,7 @@ app.all('*', function (req, res, next) {
         }
     }
 });
-
+*/
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), function () {
