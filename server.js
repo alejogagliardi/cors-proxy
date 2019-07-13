@@ -1,16 +1,17 @@
 var express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
+    path = require('path'),
     app = express();
 
 var myLimit = typeof (process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
-app.use(express.static(__dirname + "../client/dist"))
+app.use(express.static(__dirname + "/../client/dist"))
 
 app.use(bodyParser.json({ limit: myLimit }));
 
-app.get("/*", function(req, res)  {
+app.get("/", function(req, res)  {
     res.sendFile(path.join(__dirname))
 });
 
