@@ -15,11 +15,10 @@ app.get("/", function(req, res)  {
     res.sendFile(path.join(__dirname))
 });
 
-/*
-app.all('*', function (req, res, next) {
+app.all('/proxy', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
-    res.header("Access-Control-Allow-Origin", "http://35.196.56.236");
+    res.header("Access-Control-Allow-Origin", "http://visorlp.genmap.com.ar");
     res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
@@ -34,28 +33,29 @@ app.all('*', function (req, res, next) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
         }
+        var reqPath = req.url.replace('/proxy')
         if (req.header('Authorization')) {
 
-            request({ url: targetURL + req.url, method: req.method, json: req.body, headers: { 'Authorization': req.header('Authorization') } },
+            request({ url: targetURL + reqPath, method: req.method, json: req.body, headers: { 'Authorization': req.header('Authorization') } },
                 function (error, response, body) {
                     if (error) {
                         console.error('error: ' + response.statusCode)
                     }
-                    console.log(targetURL + req.url);
+                    console.log(targetURL + reqPath);
                 }).pipe(res);
         } else {
-            request({ url: targetURL + req.url, method: req.method, json: req.body },
+            request({ url: targetURL + reqPath, method: req.method, json: req.body },
                 function (error, response, body) {
                     if (error) {
                         console.error('error: ' + response.statusCode)
                     }
-                    console.log(targetURL + req.url);
+                    console.log(targetURL + reqPath);
                 }).pipe(res);
 
         }
     }
 });
-*/
+
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), function () {
