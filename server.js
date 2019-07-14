@@ -15,7 +15,7 @@ app.get("/", function(req, res)  {
     res.sendFile(path.join(__dirname))
 });
 
-app.all('/proxy', function (req, res, next) {
+app.all('/proxy*', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
     res.header("Access-Control-Allow-Origin", "http://visorlp.genmap.com.ar");
