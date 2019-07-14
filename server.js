@@ -33,7 +33,7 @@ app.all('/proxy', function (req, res, next) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
         }
-        var reqPath = req.url.replace('/proxy')
+        var reqPath = req.url.replace('/proxy','')
         if (req.header('Authorization')) {
 
             request({ url: targetURL + reqPath, method: req.method, json: req.body, headers: { 'Authorization': req.header('Authorization') } },
